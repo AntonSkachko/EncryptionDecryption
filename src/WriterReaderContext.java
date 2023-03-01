@@ -1,11 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Scanner;
 
 interface WriterReader {
     public String getMessage();
+    public void setMessage(String message);
     public void readSomething();
     public void writeSomething();
 }
@@ -18,6 +18,12 @@ class ConsoleReaderWriter implements WriterReader {
     public String getMessage() {
         return this.message;
     }
+
+    @Override
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public void readSomething() {
         Scanner scanner = new Scanner(System.in);
@@ -47,6 +53,11 @@ class FileReaderWriter implements WriterReader {
     }
 
     @Override
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
     public void readSomething() {
         try (Scanner scanner = new Scanner(readFile)) {
             message = scanner.nextLine();
@@ -64,16 +75,21 @@ class FileReaderWriter implements WriterReader {
         }
     }
 }
-
+//TODO
 public class WriterReaderContext {
     private WriterReader writerReader;
 
     public WriterReaderContext(WriterReader writerReader) {
         this.writerReader = writerReader;
     }
-    // TODO
 
-    public void executeWriterReader(String message, String choose) {
-        System.out.println("TO DO");
+    public void executeWriterReader(String pathToFile) {
+        writerReader.readSomething();
+
+        if ("".equals(pathToFile)) {
+            System.out.println(writerReader.getMessage());
+        } else {
+            writerReader.writeSomething();
+        }
     }
 }
