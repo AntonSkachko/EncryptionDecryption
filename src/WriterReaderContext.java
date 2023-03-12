@@ -4,10 +4,10 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 interface WriterReader {
-    public String getMessage();
-    public void setMessage(String message);
-    public void readSomething();
-    public void writeSomething();
+    String getMessage();
+    void setMessage(String message);
+    void readSomething();
+    void writeSomething();
 }
 
 class ConsoleReaderWriter implements WriterReader {
@@ -75,21 +75,24 @@ class FileReaderWriter implements WriterReader {
         }
     }
 }
-//TODO
+
 public class WriterReaderContext {
-    private WriterReader writerReader;
+
+    private final WriterReader writerReader;
 
     public WriterReaderContext(WriterReader writerReader) {
         this.writerReader = writerReader;
     }
 
-    public void executeWriterReader(String pathToFile) {
-        writerReader.readSomething();
+    public void executeWriterReader(int key, String choosingCipher, String alg) {
 
-        if ("".equals(pathToFile)) {
-            System.out.println(writerReader.getMessage());
-        } else {
-            writerReader.writeSomething();
-        }
+        writerReader.readSomething();
+        CipherContext cipherContext = new CipherContext();
+
+        cipherContext.setCipher("unicode".equals(alg) ? new UnicodeCipher() : new ShiftCipher());
+        writerReader.setMessage(cipherContext.executeCipher(writerReader.getMessage(), key, choosingCipher));
+
+        writerReader.writeSomething();
+
     }
 }

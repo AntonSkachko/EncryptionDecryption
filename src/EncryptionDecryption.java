@@ -1,53 +1,29 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class EncryptionDecryption {
 
     public static void main(String[] args) {
-
-
-    }
-
-    public void chooseEverything(String[] args) {
-
         String mode = "";
         int key = 0;
-        String message = "";
+        String data = "";
         String pathToReadingFile = "";
         String pathToWritingFile = "";
         String alg = "";
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
-                case "-mode":
-                    mode = args[i + 1];
-                    break;
-                case "-key":
-                    key = Integer.parseInt(args[i + 1]);
-                    break;
-                case "-data":
-                    message = args[i + 1];
-                    break;
-                case "-in":
-                    pathToReadingFile = args[i + 1];
-                    break;
-                case "-out":
-                    pathToWritingFile = args[i + 1];
-                    break;
-                case "-alg":
-                    alg = args[i + 1];
-                    break;
+                case "-mode" -> mode = args[i + 1];
+                case "-key" -> key = Integer.parseInt(args[i + 1]);
+                case "-data" -> data = args[i + 1];
+                case "-in" -> pathToReadingFile = args[i + 1];
+                case "-out" -> pathToWritingFile = args[i + 1];
+                case "-alg" -> alg = args[i + 1];
             }
         }
 
-        //TODO
-        WriterReaderContext writerReaderContext = new WriterReaderContext("".equals(pathToReadingFile) ?
+        WriterReaderContext writerReaderContext = new WriterReaderContext("console".equals(data) ?
                 new ConsoleReaderWriter() : new FileReaderWriter(pathToReadingFile, pathToWritingFile));
+        writerReaderContext.executeWriterReader(key, mode, alg);
 
-        writerReaderContext.executeWriterReader(pathToWritingFile);
     }
-
 }
 
