@@ -1,6 +1,6 @@
 
 interface Cipher {
-    public String doCipher(String message, int key);
+    String doCipher(String message, int key);
 }
 
 class ShiftCipher implements Cipher{
